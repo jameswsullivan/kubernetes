@@ -1,0 +1,13 @@
+name: helm-cli
+
+services:
+  helm-cli:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: helm-cli:1.0.0
+    container_name: helm-cli
+    hostname: helm-cli
+    volumes:
+      - ./charts:/mnt/charts
+
