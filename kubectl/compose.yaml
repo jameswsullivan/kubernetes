@@ -1,0 +1,11 @@
+name: kubectl
+
+services:
+  kubectl:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: kubectl:1.0.0
+    container_name: kubectl
+    hostname: kubectl
+
