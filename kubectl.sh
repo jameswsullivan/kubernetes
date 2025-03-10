@@ -52,3 +52,10 @@ kubectl delete deployment <deployment-name> --namespace=<namespace-name>
 kubectl delete service <service-name> --namespace=<namespace-name> --force --grace-period=0
 # Force delete a Deployment
 kubectl delete deployment <deployment-name> --namespace=<namespace-name> --force --grace-period=0
+# Restart deployment and check deployment status
+kubectl rollout status deployment <deployment-name> -n <namespace>
+kubectl rollout restart deployment <deployment-name> -n <namespace>
+# Change deployment's image
+kubectl set image deployment <deployment-name> <deployment-name>=<image-tag> -n <namespace>
+
+
