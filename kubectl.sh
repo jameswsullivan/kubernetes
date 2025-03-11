@@ -42,7 +42,8 @@ done
 # Deployment:
 kubectl create deployment <deployment-name> --image=<image> --replicas=2 --namespace=<namespace-name>
 kubectl scale deployment/<deployment-name> --replicas=3 --namespace=<namespace-name>
-kubectl get deployments --namespace=<namespace-name>
+kubectl get deployments --namespace <namespace>
+kubectl get secrets --namespace <namespace>
 kubectl get pods --namespace=<namespace-name>
 kubectl expose deployment <deployment-name> --name=<service-name> --port=80 --target-port=80 --namespace=<namespace-name> --type=LoadBalancer
 kubectl get services --namespace=<namespace-name>
@@ -52,10 +53,44 @@ kubectl delete deployment <deployment-name> --namespace=<namespace-name>
 kubectl delete service <service-name> --namespace=<namespace-name> --force --grace-period=0
 # Force delete a Deployment
 kubectl delete deployment <deployment-name> --namespace=<namespace-name> --force --grace-period=0
+kubectl delete pod <pod-name> --namespace <namespace>
 # Restart deployment and check deployment status
-kubectl rollout status deployment <deployment-name> -n <namespace>
-kubectl rollout restart deployment <deployment-name> -n <namespace>
+kubectl rollout restart deployment <deployment-name> --namespace <namespace>
+kubectl rollout status deployment <deployment-name> --namespace <namespace>
 # Change deployment's image
 kubectl set image deployment <deployment-name> <deployment-name>=<image-tag> -n <namespace>
 
+
+# Check the Kubernetes Context
+kubectl config current-context
+kubectl config get-contexts
+kubectl config use-context <context-name>
+kubectl cluster-info
+
+# Kubernetes service account
+kubectl get serviceaccount <serviceaccount-name> --namespace <namespace>
+kubectl describe serviceaccount <serviceaccount-name> --namespace <namespace>
+kubectl create serviceaccount <serviceaccount-name> --namespace <namespace>
+kubectl delete serviceaccount <serviceaccount-name> --namespace <namespace>
+
+# Role
+kubectl get role <role-name> --namespace <namespace>
+kubectl describe role <role-name> --namespace <namespace>
+kubectl get clusterrole <clusterrole-name>
+kubectl describe clusterrole <clusterrole-name>
+kubectl create role <role-name> --verb=get,list,watch,update,patch --resource=deployments,pods --namespace <namespace>
+kubectl edit role <role-name> --namespace <namespace>
+kubectl delete role <role-name> --namespace <namespace>
+kubectl delete clusterrole <clusterrole-name>
+
+# RoleBinding
+kubectl get rolebinding <rolebinding-name> --namespace <namespace>
+kubectl describe rolebinding <rolebinding-name> --namespace <namespace>
+kubectl get clusterrolebinding <clusterrolebinding-name>
+kubectl describe clusterrolebinding <clusterrolebinding-name>
+kubectl create rolebinding <rolebinding-name> --role=<role-name> --serviceaccount=<namespace>:<serviceaccount-name> --namespace <namespace>
+kubectl create clusterrole <clusterrole-name> --verb=get,list,watch,update,patch --resource=deployments,pods
+kubectl create clusterrolebinding <clusterrolebinding-name> --clusterrole=<clusterrole-name> --serviceaccount=<namespace>:<serviceaccount-name>
+kubectl delete rolebinding <rolebinding-name> --namespace <namespace>
+kubectl delete clusterrolebinding <clusterrolebinding-name>
 
