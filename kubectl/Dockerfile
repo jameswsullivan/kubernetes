@@ -8,8 +8,8 @@ ENV LANG="en_US.UTF-8"
 RUN apt-get update -y && \
     apt-get upgrade -y && \
     apt-get install -y wget nano curl unzip tzdata locales ca-certificates sudo gpg && \
-    apt-get upgrade ca-certificates -y && \
-    apt-get install -y iputils-ping iproute2 net-tools && \
+    update-ca-certificates && \
+    apt-get install -y iputils-ping iproute2 net-tools dnsutils && \
     ln -fs /usr/share/zoneinfo/America/Chicago /etc/localtime && \
     locale-gen en_US.UTF-8 && \
     update-locale LANG=en_US.UTF-8
@@ -26,5 +26,5 @@ RUN apt-get update -y && \
     apt-get update -y && \
     apt-get install -y kubectl
 
-CMD ["/bin/sh", "-c", "tail -f /dev/null"]
+CMD ["tail", "-f", "/dev/null"]
 
